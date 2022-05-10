@@ -1,0 +1,31 @@
+{
+  "name": "paper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "alipay-sdk": "^3.2.0",
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "log4js": "^6.4.4",
+    "md5": "^2.3.0",
+    "mongoose": "^5.2.10",
+    "node-schedule": "^2.1.0",
+    "nodemon": "^2.0.4",
+    "path": "^0.12.7",
+    "request": "^2.88.2",
+    "svg-captcha": "^1.4.0",
+    "url": "^0.11.0"
+  }
+}
