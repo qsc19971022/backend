@@ -41,7 +41,7 @@
     >
       <el-form :model="role">
         <el-form-item label="角色" label-width="80px" prop="username">
-          <el-select v-model="role.roleId" @change="$forceUpdate()" style="width:60%" label="角色" placeholder="请选择">
+          <el-select v-model="role.roleId" style="width:60%" label="角色" placeholder="请选择" @change="$forceUpdate()">
             <el-option
               v-for="item in selectData"
               :key="item._id"

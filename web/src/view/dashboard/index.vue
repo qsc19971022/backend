@@ -77,7 +77,7 @@
       <el-row :gutter="32">
         <el-col :xs="24" :sm="24" :lg="12">
           <div class="chart-player">
-<!--            <music-player />-->
+            <!--            <music-player />-->
           </div>
         </el-col>
         <el-col :xs="24" :sm="24" :lg="12">

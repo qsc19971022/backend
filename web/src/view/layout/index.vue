@@ -93,7 +93,7 @@ import Search from '@/view/layout/search/search'
 import BottomInfo from '@/view/layout/bottomInfo/bottomInfo'
 import { mapGetters, mapActions } from 'vuex'
 import { setUserAuthority } from '@/api/user'
-import {store} from "@/store";
+import { store } from '@/store';
 export default {
   name: 'Layout',
   components: {
