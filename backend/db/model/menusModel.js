@@ -7,9 +7,9 @@ let  menusSchema = new Schema({
   'type' : { type : Number , enum: [0, 1, 2], default: 0 }, // 0: 目录 1：菜单 2: 按钮
   'parentId' : { type : Schema.Types.ObjectId },
   'perms': { type: String },
-  'component': { type: String, required: true },
-  'name': {type: String, required: true },
-  'path': {type: String, required: true },
+  'component': { type: String },
+  'name': {type: String, },
+  'path': {type: String },
   'sort': { type: Number, default: 0 },
   'hidden': { type: Boolean, default: false },
   'meta': {
@@ -24,7 +24,6 @@ let  menusSchema = new Schema({
         type: Boolean
       }
     },
-    required: true
   },
   'createTime': {type: Date, default: dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss')}
 });

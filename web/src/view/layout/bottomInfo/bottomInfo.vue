@@ -6,14 +6,20 @@
         <a href="https://github.com/flipped-aurora/gin-vue-admin">{{ $GIN_VUE_ADMIN.appName }}</a>
       </span>
       <el-divider direction="vertical" />
-      <span>Copyright</span>
+      <span>Copyright  {{dayjs().format('YYYY')}}</span>
     </div>
   </div>
 </template>
 
 <script>
+import dayjs from 'dayjs';
 export default {
-  name: 'BottomInfo'
+  name: 'BottomInfo',
+  data() {
+    return {
+      dayjs
+    }
+  }
 }
 </script>
 

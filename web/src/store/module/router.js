@@ -16,6 +16,7 @@ export const router = {
   namespaced: true,
   state: {
     asyncRouters: [],
+    asyncMenus: [],
     routerList: routerList
   },
   mutations: {
@@ -25,6 +26,9 @@ export const router = {
     // 设置动态路由
     setAsyncRouter(state, asyncRouters) {
       state.asyncRouters = asyncRouters
+    },
+    setAsyncMenus(state, asyncMenus) {
+      state.asyncMenus = asyncMenus
     }
   },
   actions: {
@@ -42,10 +46,19 @@ export const router = {
       }]
       // const asyncRouterRes = await getMenuList();
       const asyncRouterRes = await getRoleMenuList();
+      const asyncMenus = [];
       // console.log(data, 111);
       if (asyncRouterRes.status !== 200) {
         return
       }
+      asyncRouterRes.result.menus.map((item, index) => {
+        console.log(item.type);
+        if (item.type === 2) {
+          console.log(item);
+          asyncMenus.push(item);
+          delete asyncRouterRes.result.menus[index];
+        }
+      })
       const info = asyncRouterRes.result.menus.reduce((map, node) => {
         return map[node._id] = node, node.children = [], map
       }, {})
@@ -74,6 +87,8 @@ export const router = {
       })
       asyncRouterHandle(baseRouter)
       commit('setAsyncRouter', baseRouter)
+      commit('setAsyncMenus', asyncMenus)
+      console.log(asyncMenus);
       commit('setRouterList', routerList)
       return true
     }
@@ -82,6 +97,9 @@ export const router = {
     // 获取动态路由
     asyncRouters(state) {
       return state.asyncRouters
+    },
+    asyncMenus(state) {
+      return state.asyncMenus
     },
     routerList(state) {
       return state.routerList

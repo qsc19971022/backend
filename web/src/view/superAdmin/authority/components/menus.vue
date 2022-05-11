@@ -10,6 +10,7 @@
       :props="menuDefaultProps"
       default-expand-all
       highlight-current
+      check-strictly
       node-key="_id"
       show-checkbox
       @check="nodeChange"
@@ -79,9 +80,10 @@ export default {
     const arr = []
     menus.map(item => {
       // 防止直接选中父级造成全选
-      if (!menus.some(same => same.parentId === item._id)) {
-        arr.push(item._id)
-      }
+      // if (!menus.some(same => same.parentId === item._id)) {
+      //   arr.push(item._id)
+      // }
+      arr.push(item._id);
     });
     this.menuTreeIds = arr;
   },
@@ -103,7 +105,6 @@ export default {
     // 关联树 确认方法
     async relation() {
       const checkArr = this.$refs.menuTree.getCheckedNodes(false, true);
-      console.log(checkArr);
       const res = await addMenuAuthority({
         menusId: checkArr,
         _id: this.row._id

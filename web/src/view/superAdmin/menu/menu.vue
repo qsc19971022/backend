@@ -30,16 +30,6 @@
           />
         </el-select>
       </template>
-      <template slot="typeForm" slot-scope="scope">
-        <el-select v-model="menu.type" placeholder="请选择" @change="$forceUpdate()">
-          <el-option
-            v-for="item in typeList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
-      </template>
       <template slot="keepAliveForm" slot-scope="scope">
         <el-select v-model="menu.keepAlive" placeholder="请选择" @change="$forceUpdate()">
           <el-option
@@ -70,7 +60,6 @@
       </template>
       <template slot="menu" slot-scope="{row,index}">
         <el-button
-          v-if="row.type === 0"
           type="success"
           icon="el-icon-setting"
           size="small"
@@ -83,6 +72,7 @@
           @click.stop="$refs.crud.rowEdit(row,index)"
         >编辑</el-button>
         <el-button
+          v-auth="'delMenu'"
           type="danger"
           icon="el-icon-delete"
           size="small"
@@ -103,7 +93,11 @@ import {
 } from '@/api/menu'
 import infoList from '@/mixins/infoList'
 import icon from '@/view/superAdmin/menu/icon'
-
+const dic = [
+  { label: '目录', value: 0 },
+  { label: '菜单', value: 1 },
+  { label: '按钮', value: 2 }
+];
 export default {
   name: 'Menus',
   components: {
@@ -138,6 +132,66 @@ export default {
           {
             label: '类型',
             prop: 'type',
+            type: 'select',
+            dicData: dic,
+            width: 100,
+            control:(val,form)=>{
+              if(val === 2){
+                return {
+                  component:{
+                    display:false
+                  },
+                  path: {
+                    display: false
+                  },
+                  hidden: {
+                    display: false
+                  },
+                  name: {
+                    display: false
+                  },
+                  icon: {
+                    display: false
+                  },
+                  sort: {
+                    display: false
+                  },
+                  keepAlive: {
+                    display: false
+                  },
+                  perms: {
+                    display: true
+                  }
+                }
+              }else{
+                return {
+                  component:{
+                    display: true
+                  },
+                  path: {
+                    display: true
+                  },
+                  hidden: {
+                    display: true
+                  },
+                  name: {
+                    display: true
+                  },
+                  icon: {
+                    display: true
+                  },
+                  sort: {
+                    display: true
+                  },
+                  keepAlive: {
+                    display: true
+                  },
+                  perms: {
+                    display: false
+                  }
+                }
+              }
+            },
           },
           {
             label: '路径',
@@ -148,7 +202,8 @@ export default {
             label: '是否隐藏',
             prop: 'hidden',
             formSlot: true,
-            slot: true
+            slot: true,
+            width: 100
           },
           {
             label: '文件路径',
@@ -162,17 +217,20 @@ export default {
           },
           {
             label: '上级菜单',
-            prop: 'parentId'
+            prop: 'parentId',
+            width: 120
           },
           {
             label: '图标',
             prop: 'icon',
             formSlot: true,
-            slot: true
+            slot: true,
+            width: 80
           },
           {
             label: '序号',
-            prop: 'sort'
+            prop: 'sort',
+            width: 80
           },
           {
             label: 'keepAlive',
@@ -180,6 +238,11 @@ export default {
             formSlot: true,
             width: 120,
             slot: true
+          },
+          {
+            label: '权限标识',
+            prop: 'perms',
+            width: 150
           }
         ]
       },
@@ -187,11 +250,6 @@ export default {
       selectData: [
         { label: '是', value: true, key: 1 },
         { label: '否', value: false, key: 2 }
-      ],
-      typeList: [
-        { label: '目录', value: 0 },
-        { label: '菜单', value: 1 },
-        { label: '按钮', value: 2 }
       ],
       menu: {
         title: '',
@@ -231,7 +289,7 @@ export default {
         this.$message.success(data.msg);
         await this.getTableData();
         this.tableDataDeal();
-        done(form);
+        done();
       }
     },
     async editData(form, done, loading) {

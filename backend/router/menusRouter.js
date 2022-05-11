@@ -23,9 +23,9 @@ router.post('/save', async (req, res) => {
 })
 
 router.post('/update', async (req, res) => {
-  const { _id, type, meta, parentId, component, name, sort, hidden, path } = req.body;
+  const { _id, type, meta, parentId, component, name, sort, hidden, path, perms } = req.body;
   try {
-    const result = await Menus.findByIdAndUpdate( _id, {type, component, meta, parentId, name, sort, hidden, path })
+    const result = await Menus.findByIdAndUpdate( _id, {type, component, meta, parentId, name, sort, hidden, path, perms })
     return res.json(resTool.resSuccess(result));
   } catch (err) {
     return res.json(resTool.resError(err));
