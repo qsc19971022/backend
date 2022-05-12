@@ -2,7 +2,7 @@ const mongoose = require ('mongoose');
 let  Schema = mongoose.Schema;  //通过mongoose来获取schema
 const { indexInfo } = require('../../utils/common');
 const dayjs = require('dayjs');
-
+const mongoosePaginate = require('mongoose-paginate-v2');
 let  menusSchema = new Schema({
   'type' : { type : Number , enum: [0, 1, 2], default: 0 }, // 0: 目录 1：菜单 2: 按钮
   'parentId' : { type : Schema.Types.ObjectId },
@@ -27,6 +27,7 @@ let  menusSchema = new Schema({
   },
   'createTime': {type: Date, default: dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss')}
 });
+menusSchema.plugin(mongoosePaginate);
 let Menus = mongoose.model('menus' , menusSchema);
 Menus.on('index', function (err) {
   indexInfo.outputInfo(err, this.modelName)

@@ -5,7 +5,7 @@ export default {
       tableData: [],
       searchInfo: {},
       page: {
-        currPage: 1,
+        currentPage: 1,
         total: 10,
         pageSize: 10,
         pageCount: 10,
@@ -29,13 +29,16 @@ export default {
       this.getTableData()
     },
     handleCurrentChange(val) {
-      this.page.currPage = val
+      this.page.currentPage = val
       this.getTableData()
     },
-    async getTableData(page = this.page.currPage, limit = this.page.pageSize) {
+    async getTableData(page = this.page.currentPage, limit = this.page.pageSize) {
       const table = await this.listApi({ page, limit, ...this.searchInfo })
       if (table.status === 200) {
-        this.tableData = table.result;
+        this.tableData = table.result.data;
+        this.page.currentPage = table.result.currentPage;
+        this.page.total = table.result.total;
+        this.page.currentPage = table.result.currentPage;
       }
     },
     async rowSave(form, done, loading, params) {

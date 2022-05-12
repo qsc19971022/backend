@@ -4,9 +4,18 @@ const Role = require('../db/model/roleModel');
 const {resData: resTool} = require('../utils/common');
 const ObjectId = require('mongoose').mongo.ObjectId;
 
+const { customLabels } = require('../config/config');
+const options = {
+  page: 1,
+  limit: 10,
+  customLabels,
+};
+
 router.get('/list', async (req, res) => {
   try {
-    const result = await Role.find().lean();
+    const result = await Role.paginate({}, options);
+    console.log(result);
+    console.log(await Role.count());
     return res.json(resTool.resSuccess(result));
   } catch (err) {
     return res.json(resTool.resError(err));

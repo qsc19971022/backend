@@ -16,6 +16,16 @@ const config = {
     background: '#6da4d8',
     width: 138,
     height: 40
+  },
+  customLabels: {
+    docs: 'data',
+    totalDocs: 'total',
+    page: 'currentPage',
+    nextPage: false,
+    prevPage: false,
+    hasNextPage: false,
+    hasPrevPage: false,
+    pagingCounter: false
   }
 }
 

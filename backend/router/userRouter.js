@@ -5,7 +5,7 @@ const User = require("../db/model/userModel");
 const {resData: resTool} = require('../utils/common');
 const axios = require('axios');
 const { setToken } = require('../utils/token');
-
+const { customLabels } = require('../config/config');
 
 router.post("/reg", async (req, res) => {
   // 注册接口
@@ -54,8 +54,12 @@ router.post('/userInfo', async (req, res) => {
 
 
 router.post('/list', async (req, res) => {
-  // const result = await User.find();
-  const result = await User.aggregate([
+  const options = {
+    page: 1,
+    limit: 10,
+    customLabels,
+  };
+  options.aggregate = [
     {
       $lookup: {
         from: 'roles',
@@ -67,11 +71,12 @@ router.post('/list', async (req, res) => {
     {
       $unwind: { path: '$roleName', preserveNullAndEmptyArrays: true }
     }
-  ])
-  if (result) {
+  ];
+  const result = await User.paginate({}, options);
+  try {
     return res.json(resTool.resSuccess(result));
-  } else {
-    return res.json(resTool.resBusinessError('异常错误'));
+  } catch (e) {
+    return res.json(resTool.resError(e.message));
   }
 })
 

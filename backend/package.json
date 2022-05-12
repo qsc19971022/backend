@@ -21,6 +21,7 @@
     "log4js": "^6.4.4",
     "md5": "^2.3.0",
     "mongoose": "^5.2.10",
+    "mongoose-paginate-v2": "^1.6.3",
     "node-schedule": "^2.1.0",
     "nodemon": "^2.0.4",
     "path": "^0.12.7",
