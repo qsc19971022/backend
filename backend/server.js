@@ -34,7 +34,7 @@ app.use( async (req, res, next) => {
   const reqUrl = url.parse(req.url).pathname;
   let isIllegal = true;
   console.log(token);
-  const signRouterRegExp = ['/user/login', '/user/reg', '/common/captcha'];
+  const signRouterRegExp = ['/user/login', '/user/reg', '/common/captcha', '/common/github'];
   if (signRouterRegExp.find(item => item === reqUrl)) { // 不需要校验的
     isIllegal = false;
   }

@@ -8,7 +8,6 @@ export const auth = (Vue) => {
       const menuIds = [];
       menus.map(item => { menuIds.push(item.componentName) })
       const flag = menuIds.some(item => item === binding.value);
-      console.log(flag);
       if (!flag) {
         el.style.display = 'none'
       }

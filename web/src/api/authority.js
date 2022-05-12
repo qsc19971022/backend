@@ -9,6 +9,14 @@ export const getAuthorityList = (data) => {
   })
 }
 
+export const getAllAuthorityList = (data) => {
+  return service({
+    url: '/role/listAll',
+    method: 'get',
+    params: data
+  })
+}
+
 // @Summary 删除角色
 // @Security ApiKeyAuth
 // @accept application/json

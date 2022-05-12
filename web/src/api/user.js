@@ -32,6 +32,14 @@ export const register = (data) => {
   })
 }
 
+export const github = (data) => {
+  return service({
+    url: '/common/github',
+    method: 'get',
+    data: data
+  })
+}
+
 // @Summary 修改密码
 // @Produce  application/json
 // @Param data body {username:"string",password:"string",newPassword:"string"}

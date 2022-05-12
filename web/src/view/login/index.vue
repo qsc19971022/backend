@@ -43,7 +43,8 @@
             <el-button
               type="primary"
               style="width: 46%"
-            >飞书登录</el-button>
+              @click="larkLogin"
+            >Github登录</el-button>
             <el-button
               type="primary"
               style="width: 46%;margin-left:8%"
@@ -62,7 +63,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { captcha } from '@/api/user'
+import { captcha, github } from '@/api/user'
 export default {
   name: 'Login',
   data() {
@@ -130,6 +131,9 @@ export default {
       captcha({}).then((ele) => {
         this.$refs.vPic.innerHTML = ele.result;
       })
+    },
+    larkLogin() {
+      window.location.href = 'https://github.com/login/oauth/authorize?client_id=de436baf2dd677a6c2fa&scope=read:user';
     }
   }
 }

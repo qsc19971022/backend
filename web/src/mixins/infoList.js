@@ -35,10 +35,14 @@ export default {
     async getTableData(page = this.page.currentPage, limit = this.page.pageSize) {
       const table = await this.listApi({ page, limit, ...this.searchInfo })
       if (table.status === 200) {
-        this.tableData = table.result.data;
-        this.page.currentPage = table.result.currentPage;
-        this.page.total = table.result.total;
-        this.page.currentPage = table.result.currentPage;
+        if (table.result.data) {
+          this.tableData = table.result.data;
+          this.page.currentPage = table.result.currentPage;
+          this.page.total = table.result.total;
+          this.page.currentPage = table.result.currentPage;
+        } else {
+          this.tableData = table.result
+        }
       }
     },
     async rowSave(form, done, loading, params) {

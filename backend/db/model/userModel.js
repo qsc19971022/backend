@@ -2,7 +2,7 @@ const mongoose = require ('mongoose');
 const { indexInfo } = require('../../utils/common');
 let  Schema = mongoose.Schema;  //通过mongoose来获取schema
 const ObjectId = require('mongoose').mongo.ObjectId;
-const mongoosePaginate = require('mongoose-paginate-v2');
+const aggregatePaginate = require("mongoose-aggregate-paginate-v2");
 let  userSchema = new Schema({
     'username' : {type : String , require : true},
     'password' : {type : String , require: true},
@@ -14,7 +14,7 @@ let  userSchema = new Schema({
     },
     'createTime': {type: Date, default: new Date()}
 });
-userSchema.plugin(mongoosePaginate);
+userSchema.plugin(aggregatePaginate);
 // schema创建完是不能用的  要转化为数据模型
 let User = mongoose.model('user' , userSchema);  //该数据对象和集合相关联 {'集合名' , schema对象}
 User.on('index', function (err) {

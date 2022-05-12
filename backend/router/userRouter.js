@@ -6,6 +6,7 @@ const {resData: resTool} = require('../utils/common');
 const axios = require('axios');
 const { setToken } = require('../utils/token');
 const { customLabels } = require('../config/config');
+const mongoosePaginate = require("mongoose-aggregate-paginate-v2");
 
 router.post("/reg", async (req, res) => {
   // 注册接口
@@ -59,7 +60,7 @@ router.post('/list', async (req, res) => {
     limit: 10,
     customLabels,
   };
-  options.aggregate = [
+  const myAggregate = User.aggregate([
     {
       $lookup: {
         from: 'roles',
@@ -71,8 +72,8 @@ router.post('/list', async (req, res) => {
     {
       $unwind: { path: '$roleName', preserveNullAndEmptyArrays: true }
     }
-  ];
-  const result = await User.paginate({}, options);
+  ]);
+  const result = await User.aggregatePaginate(myAggregate, options);
   try {
     return res.json(resTool.resSuccess(result));
   } catch (e) {

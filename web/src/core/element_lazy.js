@@ -10,6 +10,7 @@ import 'element-ui/lib/theme-chalk/base.css';
 import CollapseTransition from 'element-ui/lib/transitions/collapse-transition';
 //  按需引入element
 import {
+  Empty,
   Button,
   Select,
   Dialog,
@@ -111,6 +112,7 @@ Vue.use(DatePicker)
 Vue.use(Steps)
 Vue.use(Upload)
 Vue.use(Progress)
+Vue.use(Empty)
 Vue.use(Scrollbar)
 Vue.use(Loading.directive)
 Vue.use(Image)

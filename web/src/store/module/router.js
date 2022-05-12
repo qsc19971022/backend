@@ -47,14 +47,11 @@ export const router = {
       // const asyncRouterRes = await getMenuList();
       const asyncRouterRes = await getRoleMenuList();
       const asyncMenus = [];
-      // console.log(data, 111);
       if (asyncRouterRes.status !== 200) {
         return
       }
       asyncRouterRes.result.menus.map((item, index) => {
-        console.log(item.type);
         if (item.type === 2) {
-          console.log(item);
           asyncMenus.push(item);
           delete asyncRouterRes.result.menus[index];
         }
@@ -88,7 +85,6 @@ export const router = {
       asyncRouterHandle(baseRouter)
       commit('setAsyncRouter', baseRouter)
       commit('setAsyncMenus', asyncMenus)
-      console.log(asyncMenus);
       commit('setRouterList', routerList)
       return true
     }

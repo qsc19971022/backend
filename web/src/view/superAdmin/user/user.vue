@@ -70,7 +70,7 @@ import {
   updateUser,
   setUserRoles
 } from '@/api/user'
-import { getAuthorityList } from '@/api/authority'
+import { getAllAuthorityList } from '@/api/authority'
 import infoList from '@/mixins/infoList'
 import { mapGetters } from 'vuex'
 export default {
@@ -215,7 +215,7 @@ export default {
       }
     },
     async getRolesList() {
-      const result = await getAuthorityList();
+      const result = await getAllAuthorityList();
       if (result.status === 200) this.selectData = result.result;
     },
     setUserRoles(row) {
