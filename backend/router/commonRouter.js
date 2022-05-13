@@ -4,6 +4,7 @@ const router = express.Router();
 const {resData: resTool} = require('../utils/common');
 const svgCaptcha = require('svg-captcha');
 const { captcha } = require('../config/config');
+const githubService = require('../service/github');
 
 router.get('/captcha', (req, res) => {
   const c = svgCaptcha.create(captcha);
@@ -12,21 +13,13 @@ router.get('/captcha', (req, res) => {
 })
 
 router.get('/github', async (req, res) => {
-  console.log(req.query);
-  const params = {
-    client_id: 'de436baf2dd677a6c2fa',
-    client_secret: '4bf54e6327dcc3debe85be13a9b6e85ca9680cda',
-    code: req.query.code
+  const { code } = req.query;
+  try {
+    const result = githubService.register(code);
+    return res.redirect('http://127.0.0.1:8080/layout/dashboard');
+  } catch (e) {
+    return res.json(resTool.resError(e.message));
   }
-  const result = await axios.post('https://github.com/login/oauth/access_token', params);
-  console.log(result);
-  if (result.status === 200) {
-    const token = result.data.split('=')[1].split('&')[0];
-    console.log(`https://api.github.com/user?access_token=${token}`);
-    const data = await axios(`https://api.github.com/user?access_token=${token}`, { Accept: 'application/xml' });
-    console.log(data);
-  }
+});
 
-  console.log(result);
-})
 module.exports = router;

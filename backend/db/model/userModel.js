@@ -4,14 +4,15 @@ let  Schema = mongoose.Schema;  //通过mongoose来获取schema
 const ObjectId = require('mongoose').mongo.ObjectId;
 const aggregatePaginate = require("mongoose-aggregate-paginate-v2");
 let  userSchema = new Schema({
-    'username' : {type : String , require : true},
-    'password' : {type : String , require: true},
+    'username' : {type : String },
+    'password' : {type : String },
     'name' : {type : String , default: '新用户'},
     'roleId': {
       type: Schema.Types.ObjectId,
       ref: 'Role',
       default: ObjectId('6273d836d173df5f5ada6a23')
     },
+    'login': { type: String },
     'createTime': {type: Date, default: new Date()}
 });
 userSchema.plugin(aggregatePaginate);

@@ -34,7 +34,7 @@ export const register = (data) => {
 
 export const github = (data) => {
   return service({
-    url: '/common/github',
+    url: '/user/github',
     method: 'get',
     data: data
   })

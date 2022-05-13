@@ -1,4 +1,4 @@
-import { login, getUserInfo } from '@/api/user'
+import { login, getUserInfo, github } from '@/api/user'
 import { jsonInBlacklist } from '@/api/jwt'
 import router from '@/router/index'
 import { setUserInfo } from '@/api/user'
@@ -71,6 +71,19 @@ export const user = {
         router.addRoutes(asyncRouters)
         router.push({ name: 'dashboard' })
         return true
+      }
+    },
+    async GitLogin({ commit, dispatch, rootGetters, getters }) {
+      const res = await github();
+      if (res.status === 200) {
+        console.log(res.result);
+        window.location.href = res.result;
+        // commit('setToken', res.result.token)
+        // await dispatch('router/SetAsyncRouter', {}, { root: true })
+        // const asyncRouters = rootGetters['router/asyncRouters']
+        // router.addRoutes(asyncRouters)
+        // router.push({ name: 'dashboard' })
+        // return true
       }
     },
     async LoginOut({ commit }) {

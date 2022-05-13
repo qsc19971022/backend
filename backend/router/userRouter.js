@@ -117,6 +117,10 @@ router.post('/del', async (req, res) => {
     return res.json(resTool.resBusinessError('异常错误'));
   }
 })
+router.get('/github', (req, res) => {
+  const result = 'https://gitee.com/oauth/authorize?client_id=dab3612122e81300df08897f9abcb3289c246475a9b2fd0c1796f3a2d1443a73&response_type=code&redirect_uri=http://127.0.0.1:4000/common/github';
+  return res.json(resTool.resSuccess(result));
+})
 
 router.post('/roleMenu', async (req, res) => {
   const { username } = req.data;

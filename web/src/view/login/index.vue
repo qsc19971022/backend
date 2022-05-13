@@ -63,7 +63,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { captcha, github } from '@/api/user'
+import { captcha } from '@/api/user'
 export default {
   name: 'Login',
   data() {
@@ -102,7 +102,7 @@ export default {
     this.curYear = new Date().getFullYear()
   },
   methods: {
-    ...mapActions('user', ['LoginIn']),
+    ...mapActions('user', ['LoginIn', 'GitLogin']),
     async login() {
       return await this.LoginIn(this.loginForm);
     },
@@ -132,8 +132,8 @@ export default {
         this.$refs.vPic.innerHTML = ele.result;
       })
     },
-    larkLogin() {
-      window.location.href = 'https://github.com/login/oauth/authorize?client_id=de436baf2dd677a6c2fa&scope=read:user';
+    async larkLogin() {
+      await  this.GitLogin();
     }
   }
 }
