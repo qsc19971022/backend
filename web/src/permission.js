@@ -1,12 +1,14 @@
 import router from './router'
 import { store } from '@/store'
 import getPageTitle from '@/utils/page'
+import Cookies from "js-cookie";
 
 let asyncRouterFlag = 0
 
 const whiteList = ['Login', 'Init']
 router.beforeEach(async(to, from, next) => {
-  const token = store.getters['user/token']
+  // const token = store.getters['user/token'];
+  const token = Cookies.get('token');
   // 在白名单中的判断情况
   // 修改网页标签名称
   document.title = getPageTitle(to.meta.title)

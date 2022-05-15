@@ -15,8 +15,10 @@ router.get('/captcha', (req, res) => {
 router.get('/github', async (req, res) => {
   const { code } = req.query;
   try {
-    const result = githubService.register(code);
-    return res.redirect('http://127.0.0.1:8080/layout/dashboard');
+    const result = await githubService.register(code);
+    res.cookie('token', result.token, { httpOnly: false, expires: new Date(Date.now() + 24 * 3600000) });
+    res.redirect('http://127.0.0.1:8080/#/layout/dashboard');
+    // return res.body(resTool.resSuccess(result));
   } catch (e) {
     return res.json(resTool.resError(e.message));
   }

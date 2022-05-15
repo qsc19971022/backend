@@ -1,5 +1,4 @@
-import { login, getUserInfo, github } from '@/api/user'
-import { jsonInBlacklist } from '@/api/jwt'
+import { login, getUserInfo, github, exit } from '@/api/user'
 import router from '@/router/index'
 import { setUserInfo } from '@/api/user'
 import { Message } from 'element-ui'
@@ -76,17 +75,11 @@ export const user = {
     async GitLogin({ commit, dispatch, rootGetters, getters }) {
       const res = await github();
       if (res.status === 200) {
-        console.log(res.result);
         window.location.href = res.result;
-        // commit('setToken', res.result.token)
-        // await dispatch('router/SetAsyncRouter', {}, { root: true })
-        // const asyncRouters = rootGetters['router/asyncRouters']
-        // router.addRoutes(asyncRouters)
-        // router.push({ name: 'dashboard' })
-        // return true
       }
     },
     async LoginOut({ commit }) {
+      await exit();
       commit('LoginOut');
     },
     async changeActiveColor({ commit, state }, data) {

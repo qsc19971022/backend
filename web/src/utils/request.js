@@ -1,4 +1,5 @@
 import axios from 'axios' // 引入axios
+import Cookies from 'js-cookie'
 import { Message } from 'element-ui'
 import { store } from '@/store'
 import context from '@/main'
@@ -35,7 +36,8 @@ service.interceptors.request.use(
     if (!config.donNotShowLoading) {
       showLoading()
     }
-    const token = store.getters['user/token']
+    // const token = store.getters['user/token']
+    const token = Cookies.get('token');
     config.data = JSON.stringify(config.data);
     config.headers = {
       'Content-Type': 'application/json',
@@ -69,7 +71,6 @@ service.interceptors.response.use(
       if (response.data.status === 505) {
         store.commit('user/LoginOut')
       }
-      console.log(response);
       return response.data.msg ? response.data : response
     }
   },

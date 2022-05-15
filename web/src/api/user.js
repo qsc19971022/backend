@@ -94,8 +94,8 @@ export const setUserAuthority = (data) => {
 // @Router /user/deleteUser [delete]
 export const deleteUser = (data) => {
   return service({
-    url: '/system/sysuser/delete',
-    method: 'delete',
+    url: '/user/del',
+    method: 'post',
     data: data
   })
 }
@@ -150,6 +150,14 @@ export const setUserRoles = (data) => {
   return service({
     url: '/user/setUerRole',
     method: 'post',
+    data
+  })
+}
+
+export const exit = (data) => {
+  return service({
+    url: '/user/exit',
+    method: 'get',
     data
   })
 }

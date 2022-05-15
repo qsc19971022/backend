@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken');
 const conf = require('../config/config');
-exports.setToken =  (username) => {
+exports.setToken =  (username, type = 'user') => {
   return new Promise((resolve) => {
     const token = jwt.sign({
-      username
+      username,
+      type
     }, conf.server.jwtSecret, { expiresIn: conf.server.expiresIn });
     resolve(token);
   })

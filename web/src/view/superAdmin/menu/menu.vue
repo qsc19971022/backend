@@ -325,7 +325,6 @@ export default {
       }
     },
     addChildMenu(row) {
-      console.log(row);
       this.menu.parentId = row._id;
       this.$refs.crud.rowAdd();
     },

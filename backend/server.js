@@ -33,7 +33,6 @@ app.use( async (req, res, next) => {
   const token = req.headers['token'];
   const reqUrl = url.parse(req.url).pathname;
   let isIllegal = true;
-  console.log(reqUrl);
   const signRouterRegExp = ['/user/login', '/user/reg', '/common/captcha', '/common/github', '/user/github'];
   if (signRouterRegExp.find(item => item === reqUrl)) { // 不需要校验的
     isIllegal = false;
@@ -49,7 +48,7 @@ app.use( async (req, res, next) => {
   if (!info || typeof info === 'string') {
     return res.json(resTool.resTokenError(info || "token error"));
   } else {
-    req.data = { username: info.username};
+    req.data = { username: info.username, type: info.type };
     return next();
   }
 })

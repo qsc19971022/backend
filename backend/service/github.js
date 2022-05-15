@@ -10,7 +10,7 @@ githubService.register = async (code) => {
     client_secret: '5ce2da838df2c0a42e6ba2d978f7309b9258a70aeeefd9d4e01f42f6085479b2',
     code: code,
     grant_type: 'authorization_code',
-    redirect_uri: 'http://127.0.0.1:4000/common/github'
+    redirect_uri: 'http://admin.woftsun.cn:4000/common/github'
   }
   const result = await axios.post('https://gitee.com/oauth/token', params);
   if (result.status === 200) {
@@ -19,10 +19,10 @@ githubService.register = async (code) => {
     if (data.status === 200 ){
       const isExist = await User.find({ login: data.data.login });
       if (!isExist.length) {
-        const user = new User({ login: data.data.login });
+        const user = new User({ login: data.data.login, name: data.data.name });
         res = await user.save();
       }
-      res.token = setToken(data.data.login);
+      res.token = await setToken(data.data.login, 'git');
     }
   }
   return res;

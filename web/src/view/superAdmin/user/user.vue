@@ -30,7 +30,7 @@
           type="danger"
           icon="el-icon-delete"
           size="small"
-          @click.stop="$refs.crud.rowDelete(row,index)"
+          @click.stop="delUser(row)"
         >删除</el-button>
       </template>
     </avue-crud>
@@ -64,7 +64,6 @@
 const path = process.env.VUE_APP_BASE_API
 import {
   getUserList,
-  setUserAuthorities,
   register,
   deleteUser,
   updateUser,
@@ -150,7 +149,7 @@ export default {
           },
           {
             label: '第三方账号',
-            prop: 'phonenumber',
+            prop: 'login',
             labelWidth: 100
           },
           {
@@ -231,6 +230,12 @@ export default {
         this.setRolesDialog = false;
         await this.getTableData()
         this.role = {}
+      }
+    },
+    async delUser(row) {
+      const result = await deleteUser({ _id: row._id });
+      if (result.status === 200) {
+        await this.getTableData();
       }
     }
   }

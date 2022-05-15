@@ -44,7 +44,7 @@
               type="primary"
               style="width: 46%"
               @click="larkLogin"
-            >Github登录</el-button>
+            >Gitee登录</el-button>
             <el-button
               type="primary"
               style="width: 46%;margin-left:8%"
@@ -55,7 +55,7 @@
       </div>
       <div class="login_panle_right" />
       <div class="login_panle_foot">
-        <div class="copyright">Copyright &copy; {{ curYear }} 💖 flipped-aurora</div>
+        <div class="copyright">Copyright &copy; {{ curYear }}</div>
       </div>
     </div>
   </div>
@@ -107,11 +107,11 @@ export default {
       return await this.LoginIn(this.loginForm);
     },
     async submitForm() {
-      this.$refs.loginForm.validate(async(v) => {
+      await this.$refs.loginForm.validate(async(v) => {
         if (v) {
           const flag = await this.login()
           if (!flag) {
-            this.loginVerify()
+            await this.loginVerify()
           }
         } else {
           this.$message({
@@ -119,7 +119,7 @@ export default {
             message: '请正确填写登录信息',
             showClose: true
           })
-          this.loginVerify()
+          await this.loginVerify()
           return false
         }
       })
@@ -133,7 +133,7 @@ export default {
       })
     },
     async larkLogin() {
-      await  this.GitLogin();
+      await this.GitLogin();
     }
   }
 }

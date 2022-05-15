@@ -68,7 +68,6 @@ export default {
       }
     },
     async searchList(params, done) {
-      console.log(params);
       done();
       // const result = await this.searchApi(params);
       // if (result.code === 0){

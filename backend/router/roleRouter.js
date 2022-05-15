@@ -15,8 +15,6 @@ router.get('/list', async (req, res) => {
   };
   try {
     const result = await Role.paginate({}, options);
-    console.log(result);
-    console.log(await Role.count());
     return res.json(resTool.resSuccess(result));
   } catch (err) {
     return res.json(resTool.resError(err));

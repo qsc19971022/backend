@@ -34,6 +34,7 @@ router.post("/login", async (req, res) => {
   const result = await User.findOne({ username, password: md5(password) }).lean();
   if(result) {
     result.token = await setToken(username); // token设置
+    res.cookie('token', result.token, { httpOnly: false, expires: new Date(Date.now() + 24 * 3600000) });
     return res.json(resTool.resSuccess(result));
   } else {
     return res.json(resTool.resBusinessError('用户名或密码错误'));
@@ -44,8 +45,14 @@ router.post("/login", async (req, res) => {
 // 获取用户信息
 
 router.post('/userInfo', async (req, res) => {
-  const {username} = req.data;
-  const result = await User.findOne({username})
+  const { username, type } = req.data;
+  let queryData = Object.create(null);
+  if (type === 'user') {
+    queryData = { username: username + '' };
+  } else {
+    queryData = { login: username + '' };
+  }
+  const result = await User.findOne(queryData)
   if (result) {
     return res.json(resTool.resSuccess(result));
   } else {
@@ -118,16 +125,22 @@ router.post('/del', async (req, res) => {
   }
 })
 router.get('/github', (req, res) => {
-  const result = 'https://gitee.com/oauth/authorize?client_id=dab3612122e81300df08897f9abcb3289c246475a9b2fd0c1796f3a2d1443a73&response_type=code&redirect_uri=http://127.0.0.1:4000/common/github';
+  const result = 'https://gitee.com/oauth/authorize?client_id=dab3612122e81300df08897f9abcb3289c246475a9b2fd0c1796f3a2d1443a73&response_type=code&redirect_uri=http://admin.woftsun.cn:4000/common/github';
   return res.json(resTool.resSuccess(result));
 })
 
 router.post('/roleMenu', async (req, res) => {
-  const { username } = req.data;
+  const { username, type } = req.data;
+  let queryData = Object.create(null);
+  if (type === 'user') {
+    queryData = { username: username + '' };
+  } else {
+    queryData = { login: username + '' };
+  }
   try {
     const result = await User.aggregate([
       {
-        $match: { username: username + '' }
+        $match: queryData
       },
       {
         $lookup: {
@@ -153,6 +166,11 @@ router.post('/roleMenu', async (req, res) => {
   } catch (e) {
     return res.json(resTool.resError(e.message));
   }
+})
+
+router.get('/exit', (req, res) => {
+  res.cookie('token', '', { httpOnly: false, expires: new Date(Date.now() + 24 * 3600000) });
+  return res.json(resTool.resSuccess({}));
 })
 
 
